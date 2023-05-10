@@ -22,7 +22,7 @@ const TextContainer = styled.div`
   margin: 20px 0;
   width: 100%;
 `
-const BottomContiner =styled.div`
+const BottomContainer =styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
@@ -42,10 +42,10 @@ function CreatePost () {
     <TextContainer>
       <Textarea placeholder="Digite sua mensagem" rows="4" />
     </TextContainer>
-    <BottomContiner>
+    <BottomContainer>
       <BottomText>A sua mensagem será pública.</BottomText>
       <Buttom>Enviar mensagem</Buttom>
-    </BottomContiner>
+    </BottomContainer>
   </PostContainer>
  )
 }
