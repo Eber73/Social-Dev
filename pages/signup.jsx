@@ -1,3 +1,4 @@
+import { useState } from "react"
 import styled from "styled-components"
 import Link from "next/link"
 
@@ -24,19 +25,36 @@ const Text =styled.p`
 `
 
 function Signup () {
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [user, setUser] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const hendleForm = (event) => {
+    event.preventDefault()
+    console.log({
+      firstName,
+      lastName,
+      user,
+      email,
+      password
+    })
+  }
+
   return (
     <ImageWithSpace>
       <H1># Social Dev</H1>
       <H4>Tudo que acontece no mundo dev, está aqui!</H4>
       <FormContainer>
         <H2>Crie sua conta</H2>
-        <Form>
-          <Input label="Nome" />
-          <Input label="Sobrenome" />
-          <Input label="Usuário" />
-          <Input label="Email ou usuário" type="email" />
-          <Input label="Senha" type="password" />
-          <Button>Crie sua conta</Button>
+        <Form onSubmit={hendleForm}>
+          <Input label="Nome" onChange={({ target }) => {setFirstName(target.value)}} />
+          <Input label="Sobrenome" onChange={({ target }) => {setLastName(target.value)}} />
+          <Input label="Usuário" onChange={({ target }) => {setUser(target.value)}} />
+          <Input label="Email" type="email" onChange={({ target }) => {setEmail(target.value)}} />
+          <Input label="Senha" type="password" onChange={({ target }) => {setPassword(target.value)}} />
+          <Button onClick={hendleForm}>Crie sua conta</Button>
         </Form>
         <Text>Já Possui uma conta? <Link href="/login">Faça seu login</Link> </Text>
       </FormContainer>
