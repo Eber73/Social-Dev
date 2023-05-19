@@ -1,5 +1,5 @@
-import { forwardRef } from "react";
 import styled from "styled-components";
+import { useController } from "react-hook-form"
 
 const InputContainer = styled.div`
   width: 100%;
@@ -32,19 +32,23 @@ const ErrorLabel = styled.span`
 `
 
 const errorMessage = {
-  'string.empty': 'Este campo é obrigatório.',
+  'any.required': 'Este campo é obrigatório.',
   'string.email': 'Por favor digite um e-mail válido.'
 }
 
-  const Input = forwardRef(({ label, error, ...props }, ref) => {
-    return (
-      <InputContainer>
-        <Styledlabel>{label}</Styledlabel>
-        <StyledInput placeholder={label} error={error} {...props} ref={ref} />
-        {error && <ErrorLabel>{errorMessage[error.type] || error.message}</ErrorLabel>}
-      </InputContainer>
-    )
-  }
-)
+const Input = ({ label, name, control, defultValue= '', ...props }) => {
+  const {
+    field: {value, onChange},
+    fieldState: { error }
+  } = useController ({ name, control, defultValue })
+
+  return (
+    <InputContainer>
+       <Styledlabel>{label}</Styledlabel>
+       <StyledInput placeholder={label} error={error} {...props} value={value} onChange={onChange} />
+      {error && <ErrorLabel>{errorMessage[error.type] || error.message}</ErrorLabel>}
+     </InputContainer>
+   )
+}
 
 export default Input
