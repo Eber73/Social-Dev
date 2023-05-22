@@ -35,14 +35,15 @@ const errorMessage = {
   'any.required': 'Este campo é obrigatório.',
   'string.empty': 'Este campo é obrigatório.',
   'string.email': 'Por favor digite um e-mail válido.',
-  'duplicated': 'Já existe uma conta redistrada com esse valor'
+  'duplicated': 'Já existe uma conta redistrada com esse'
 }
 
-const Input = ({ label, name, control, defultValue= '', ...props }) => {
+const Input = ({ label, name, control, defaultValue='', ...props }) => {
   const {
     field: {value, onChange},
     fieldState: { error }
-  } = useController ({ name, control, defultValue })
+  } = useController ({ name, control, defaultValue })
+
 
   return (
     <InputContainer>
