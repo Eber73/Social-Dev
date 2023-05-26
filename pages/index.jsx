@@ -20,16 +20,6 @@ const LastPostText = styled(H3)`
   padding: 40px 0;
 `
 
-const RefreshPosts = styled.span`
-  font-weigth: bold;
-  color: ${props => props.theme.primary};
-  cursor: pointer;
-`
-
-const RefreshPostsContainer = styled.div`
-  text-align: center;
-`
-
 const PostConteiner = styled.div`
  display: flex;
  flex-direction: column;
@@ -49,10 +39,7 @@ function HomePage ({ user }) {
       <Content>
         <Container>
           <CreatePost username={user.user} />
-          <LastPostText>Últimas postagens:</LastPostText>
-          <RefreshPostsContainer>
-            <RefreshPosts>Carregar novas postagens</RefreshPosts>
-          </RefreshPostsContainer>          
+          <LastPostText>Últimas postagens:</LastPostText>  
           <PostConteiner>
               {
                 data?.map(post => 
