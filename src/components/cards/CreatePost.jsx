@@ -7,7 +7,7 @@ import { useSWRConfig } from "swr"
 import { createPostSchema } from "../../../modules/post/post.schema"
 
 import H4 from "../typography/H4"
-import ControlledTextarea from "../inputs/COntrolledTextArea"
+import ControlledTextarea from "../inputs/ControlledTextArea"
 import Buttom from "../inputs/Button"
 
 const PostContainer = styled.div`
