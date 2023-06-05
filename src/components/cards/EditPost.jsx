@@ -4,7 +4,7 @@ import axios from "axios"
 
 import { createPostSchema } from "../../../modules/post/post.schema"
 
-import ControlledTextarea from "../inputs/COntrolledTextArea"
+import ControlledTextarea from "../inputs/ControlledTextArea"
 import Button from "../inputs/Button"
 
 const EditPost = ({ id, text, onSave }) => {
