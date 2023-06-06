@@ -5,6 +5,7 @@ import { joiResolver } from "@hookform/resolvers/joi"
 import axios from "axios"
 import { useRouter } from "next/router"
 import { loginSchema } from "../modules/user/user.schema"
+import { useState } from "react"
 
 import ImageWithSpace from "../src/components/layout/ImageWithSpace"
 import H1 from "../src/components/typography/H1"
@@ -29,24 +30,29 @@ const Text =styled.p`
 `
 
 function Login () {
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
   const { control, handleSubmit, formState: { errors }, setError } = useForm({
     resolver: joiResolver(loginSchema)
   })
 
   const onSubmit = async (data) => {
+    setLoading(true)
     try{
       const { status } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/user/login`, data)
       if (status === 200) {
+        setLoading(false)
         router.push('/')
       }
     } catch ({ response }) {
+      setLoading(false)
       if (response.data === 'incorrect password') {
         setError('password', {
           message: 'Senha incorreta.'
         })
       }
       else  if (response.data === 'not found') {
+        setLoading(false)
         setError('userOrEmail', {
           message: 'Usuário ou email não encontrado.'
         })
@@ -63,7 +69,7 @@ function Login () {
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Input label="Email ou usuário" name="userOrEmail" control={control} />
           <Input label="Senha" type="password" name="password" control={control} />
-          <Button loading type="submit" disabled={Object.keys(errors).length > 0}>Entrar</Button>
+          <Button loading={loading} type="submit" disabled={Object.keys(errors).length > 0}>Entrar</Button>
         </Form>
         <Text>Não possui uma conta? <Link href="/signup">Faça seu cadastro</Link> </Text>
       </FormContainer>

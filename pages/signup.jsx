@@ -2,8 +2,10 @@ import styled from "styled-components"
 import Link from "next/link"
 import { useForm } from "react-hook-form"
 import { joiResolver } from "@hookform/resolvers/joi"
-import axios from "axios"
 import { useRouter } from "next/router"
+import { useState } from "react"
+
+import axios from "axios"
 
 import { signupSchema } from "../modules/user/user.schema"
 
@@ -30,18 +32,22 @@ const Text =styled.p`
 `
 
 function Signup () {
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
   const { control, handleSubmit, formState: { errors }, setError } = useForm({ 
     resolver: joiResolver(signupSchema)
   })
 
   const handleForm = async (data) => {
+    setLoading(true)
     try {
       const { status } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/user/signup`, data)
       if (status === 201) {
+        setLoading(false)
         router.push('/')
       }
     } catch (err) {
+      setLoading(false)
       if (err.response.data.code === 11000) {
         setError(err.response.data.duplicatedKey, {
           type: 'duplicated'
@@ -63,7 +69,7 @@ function Signup () {
           <Input label="Usuário" name="user" control={control} />
           <Input label="Email" type="email" name="email" control={control} />
           <Input label="Senha" type="password" name="password" control={control} />
-          <Button type="submit" disabled={Object.keys(errors).length > 0}>Cadastrar</Button>
+          <Button loading={loading} type="submit" disabled={Object.keys(errors).length > 0}>Cadastrar</Button>
         </Form>
         <Text>Já Possui uma conta? <Link href="/login">Faça seu login</Link> </Text>
       </FormContainer>
