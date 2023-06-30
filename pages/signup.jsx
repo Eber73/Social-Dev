@@ -43,16 +43,16 @@ function Signup () {
     try {
       const { status } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/user/signup`, data)
       if (status === 201) {
-        setLoading(false)
         router.push('/')
       }
     } catch (err) {
-      setLoading(false)
       if (err.response.data.code === 11000) {
         setError(err.response.data.duplicatedKey, {
           type: 'duplicated'
         })
       }
+    } finally {
+      setLoading(false)
     }
   }
 

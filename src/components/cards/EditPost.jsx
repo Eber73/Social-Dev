@@ -25,11 +25,11 @@ const EditPost = ({ id, text, onSave }) => {
 
       if (response.status === 200) {
         onSave()
-        setLoading(false)
       }
     } catch (err) {
-      setLoading(false)
       console.error(err)
+    } finally {
+      setLoading(false)
     }
   }
 

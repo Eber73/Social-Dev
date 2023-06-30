@@ -41,22 +41,22 @@ function Login () {
     try{
       const { status } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/user/login`, data)
       if (status === 200) {
-        setLoading(false)
         router.push('/')
       }
     } catch ({ response }) {
-      setLoading(false)
+      
       if (response.data === 'incorrect password') {
         setError('password', {
           message: 'Senha incorreta.'
         })
       }
       else  if (response.data === 'not found') {
-        setLoading(false)
         setError('userOrEmail', {
           message: 'Usuário ou email não encontrado.'
         })
       }
+    } finally {
+      setLoading(false)
     }
   }
 
